@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registered Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="top-nav">
+    <div class="nav-title">Hostel Portal</div>
+    <div class="menu-btn" onclick="toggleMenu()">&#8942;</div>
+</nav>
+
+<div id="sideMenu" class="side-menu">
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/users">👥 Registered Users</a>
+    <a href="/admin/logs">📜 Login Logs</a>
+    <a href="/admin/reports">📈 Reports</a>
+    <a href="/logout" class="logout">🚪 Logout</a>
+</div>
+
+<!-- MENU -->
+<div id="sideMenu" class="side-menu">
+    <a href="/admin">Admin Dashboard</a>
+    <a href="/admin/reports">Reports</a>
+    <a href="/admin/logs">Login Logs</a>
+    <a href="/logout" class="logout">Logout</a>
+</div>
+
+<!-- CONTENT -->
+ 
+<div class="admin-table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>User Details</th>
+                <th>Hostel/Room</th>
+                <th>Role</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
+            
+            <tr>
+                <td><strong>{{ u.name }}</strong><br><small>{{ u.email }}</small></td>
+                <td>{{ u.hostel }} ({{ u.room }})</td>
+                <td><span class="badge" style="background:#082b58;">{{ u.role }}</span></td>
+                <td>
+                    {% if u.is_locked %}
+                        <span class="badge badge-locked">Locked</span>
+                    {% else %}
+                        <span class="badge badge-active">Active</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("sideMenu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+</script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        // Toggle display between 'flex' and 'none'
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+
+    // Close the menu if the user clicks anywhere outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("sideMenu");
+            if (menu && menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+        }
+    }
+</script>
+</body>
+</html>

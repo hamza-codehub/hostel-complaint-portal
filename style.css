@@ -1,0 +1,422 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding-top: 60px; /* space for top navbar */
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+    color: #222;
+}
+
+/* =========================
+   TOP NAVIGATION BAR
+========================= */
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 55px;
+    background: #0f2027;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 1000;
+}
+
+.nav-title {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* =========================
+   LETHAL DROPDOWN / SIDE MENU
+========================= */
+.menu-btn {
+    font-size: 28px;
+    cursor: pointer;
+    user-select: none;
+    color: #94a3b8;
+    transition: all 0.3s ease;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-btn:hover {
+    color: #60a5fa; /* Modern blue highlight */
+    transform: rotate(90deg); /* Visual feedback when hovering dots */
+}
+
+.side-menu {
+    position: fixed;
+    top: 60px; /* Aligned exactly under the top-nav */
+    right: 20px;
+    width: 240px;
+    background: rgba(30, 41, 59, 0.95); /* Deep slate with transparency */
+    backdrop-filter: blur(12px); /* Glassmorphism effect */
+    display: none; /* Controlled by JavaScript */
+    flex-direction: column;
+    z-index: 1001;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 
+                0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    overflow: hidden;
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.side-menu a {
+    padding: 14px 20px;
+    color: #e2e8f0;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+}
+
+.side-menu a:hover {
+    background: rgba(96, 165, 250, 0.1); /* Subtle blue glow */
+    color: #60a5fa;
+    padding-left: 25px; /* Slight slide effect on hover */
+}
+
+.side-menu .logout {
+    color: #f87171; /* Warning red for logout */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.side-menu .logout:hover {
+    background: rgba(248, 113, 113, 0.1);
+    color: #f87171;
+}
+
+/* =========================
+   LOGIN & REGISTER PAGES
+========================= */
+.login-container {
+    width: 360px;
+    margin: 80px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.12);
+}
+
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-container input,
+.login-container select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 14px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.login-container button {
+    width: 100%;
+    padding: 10px;
+    background: #4e54c8;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.login-container button:hover {
+    background: #3c40a4;
+}
+
+.register-text {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 14px;
+}
+
+.register-text a {
+    color: #4e54c8;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.register-text a:hover {
+    text-decoration: underline;
+}
+
+/* error / flash messages */
+.error-box {
+    background: #ff5252;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+.success-box {
+    background: #4caf50;
+    color: white;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+/* =========================
+   DASHBOARD & ADMIN CARDS
+========================= */
+.card {
+    background: white;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 6px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   STATUS BADGES
+========================= */
+.status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.pending {
+    background: #ffc107;
+    color: black;
+}
+
+.status.received {
+    background: #03a9f4;
+    color: white;
+}
+
+.status.verified {
+    background: #673ab7;
+    color: white;
+}
+
+.status.resolved {
+    background: #4caf50;
+    color: white;
+}
+
+/* =========================
+   DASHBOARD STATS (OPTIONAL)
+========================= */
+.stats {
+    display: flex;
+    gap: 10px;
+    margin: 15px 0;
+}
+
+.stats .card {
+    flex: 1;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 600px) {
+    .login-container {
+        width: 90%;
+    }
+
+    .stats {
+        flex-direction: column;
+    }
+}
+.login-container input {
+    font-size: 14px;
+}
+
+.login-container button {
+    margin-top: 5px;
+}
+.login-logo {
+    display: block;
+    margin: 0 auto 12px auto;
+    height: 45px;      /* 👈 perfect size */
+    width: auto;
+}
+/* Perfect full-screen background for auth pages */
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background-image:
+        linear-gradient(
+            rgba(15, 32, 39, 0.75),
+            rgba(15, 32, 39, 0.75)
+        ),
+        url("../images/bg.jpg");
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    font-family: Arial, sans-serif;
+    color: #222;
+}
+/* Login container and card styling */
+.login-container,
+.card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+/* Top navigation bar */
+.top-nav {
+    background: #1f2937;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Three dots menu button */
+.menu-btn {
+    cursor: pointer;
+    font-size: 20px;
+}
+
+/* Side menu */
+.side-menu {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    right: 10px;
+    top: 50px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.side-menu a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+}
+
+.side-menu a:hover {
+    background: #f1f1f1;
+}
+
+
+
+body {
+    padding-top: 60px;
+}
+/* =========================
+   ADMIN TABLE STYLES
+========================= */
+/* =========================
+   LETHAL PROFESSIONAL TABLES
+========================= */
+/* Container that holds the table */
+.admin-table-container {
+    background: #1c293f; /* Sleek dark blue/gray */
+    border-radius: 12px;
+    padding: 10px;
+    margin-top: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+    overflow-x: auto;
+}
+
+/* The Table Itself */
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: none !important; /* Forces removal of old-school borders */
+    color: #d4dbe4;
+}
+
+/* Header Row */
+.admin-table th {
+    background: #0f172a; /* Darker header */
+    color: #60a5fa; /* Modern blue text */
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    padding: 16px;
+    text-align: left;
+    border-bottom: 2px solid #334155;
+}
+
+/* Data Rows */
+.admin-table td {
+    padding: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* Row Hover Effect */
+.admin-table tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+    transition: 0.2s ease;
+}
+
+/* =========================
+   STATUS BADGES (Lethal Look)
+========================= */
+.badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+/* Success/Active */
+.badge-active, .badge-success { 
+    background: rgba(34, 197, 94, 0.2); 
+    color: #4ade80; 
+}
+
+/* Locked/Failed/Danger */
+.badge-locked, .badge-failed { 
+    background: rgba(239, 68, 68, 0.2); 
+    color: #f87171; 
+}
+.btn-danger-small {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: 0.3s;
+}
+
+.btn-danger-small:hover {
+    background: #ef4444;
+    color: white;
+}

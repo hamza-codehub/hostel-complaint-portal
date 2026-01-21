@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login Logs</title>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- TOP NAVBAR -->
+<nav class="top-nav">
+    <div class="nav-title">Hostel Portal</div>
+    <div class="menu-btn" onclick="toggleMenu()">&#8942;</div>
+</nav>
+
+<div id="sideMenu" class="side-menu">
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/users">👥 Registered Users</a>
+    <a href="/admin/logs">📜 Login Logs</a>
+    <a href="/admin/reports">📈 Reports</a>
+    <a href="/logout" class="logout">🚪 Logout</a>
+</div>
+
+<!-- SIDE MENU -->
+<div id="sideMenu" class="side-menu">
+    <a href="/admin">Admin Dashboard</a>
+    <a href="/admin/users">Registered Users</a>
+    <a href="/admin/reports">Reports</a>
+    <a href="/logout" class="logout">Logout</a>
+</div>
+
+<!-- CONTENT -->
+ 
+<div class="admin-table-container">
+    <table class="admin-table">
+        <thead>
+            <tr>
+                <th>User Email</th>
+                <th>Status</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.email }}</td>
+                <td>
+                    <span class="badge {{ 'badge-success' if log.status == 'SUCCESS' else 'badge-failed' }}">
+                        {{ log.status }}
+                    </span>
+                </td>
+                <td>{{ log.time }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function toggleMenu() {
+    const menu = document.getElementById("sideMenu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+}
+</script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        // Toggle display between 'flex' and 'none'
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+
+    // Close the menu if the user clicks anywhere outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("sideMenu");
+            if (menu && menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+        }
+    }
+</script>
+</body>
+</html>

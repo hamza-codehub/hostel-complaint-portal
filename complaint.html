@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Complaint</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Submit Complaint</h2>
+
+    <form method="POST">
+        <select name="category" required>
+            <option value="">Select Category</option>
+            <option>Water</option>
+            <option>Electricity</option>
+            <option>Furniture</option>
+            <option>Internet</option>
+            <option>Cleanliness</option>
+            <option>Ragging</option>
+            <option>others</option>
+        </select>
+
+        <textarea name="description" placeholder="Describe issue" required></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <a href="/dashboard">Back</a>
+</div>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        // Toggle display between 'flex' and 'none'
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+
+    // Close the menu if the user clicks anywhere outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("sideMenu");
+            if (menu && menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+        }
+    }
+</script>
+</body>
+</html>

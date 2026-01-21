@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Welcome, {{ name }}</h2>
+<div class="stats">
+    <div class="card">Total: {{ complaints|length }}</div>
+    <div class="card">
+        Pending: {{ complaints|selectattr("status","equalto","Pending")|list|length }}
+    </div>
+    <div class="card">
+        Resolved: {{ complaints|selectattr("status","equalto","Resolved")|list|length }}
+    </div>
+</div>
+
+    <a href="/complaint"><button>Submit Complaint</button></a>
+
+    <h3>Your Complaints</h3>
+
+    {% for c in complaints %}
+        <div class="card">
+            <p><b>Category:</b> {{ c.category }}</p>
+            <span class="status {{ c.status|lower }}">{{ c.status }}</span>
+
+            <p>{{ c.description }}</p>
+        </div>
+    {% else %}
+        <p>No complaints yet</p>
+    {% endfor %}
+
+    <a href="/logout"><button class="danger">Logout</button></a>
+</div>
+<nav class="top-nav">
+    <div class="nav-title">Hostel Complaint Portal</div>
+    
+
+    <!-- MENU BUTTON (TOP RIGHT) -->
+    <div class="menu-btn" onclick="toggleMenu()">
+        &#8942;
+        
+        
+
+
+    </div>
+</nav>
+
+<!-- DROPDOWN MENU -->
+<div id="sideMenu" class="side-menu">
+
+    <a href="/dashboard">📊 Dashboard</a>
+
+    {% if session.get("role") != "admin" %}
+        <a href="/complaint">📈 New Complaint</a>
+    {% endif %}
+
+    {% if session.get("role") == "admin" %}
+        <a href="/admin">Admin Panel</a>
+        <a href="/admin/reports">Reports</a>
+        <a href="/admin/logs">Login Logs</a>
+    {% endif %}
+
+    <a href="/logout" class="logout">🚪 Logout</a>
+</div>
+
+
+
+</nav>
+<script>
+    const toggle = document.getElementById("themeToggle");
+    const body = document.body;
+
+    // Load saved theme
+    if (localStorage.getItem("theme") === "light") {
+        body.classList.add("light");
+        toggle.textContent = "☀️";
+    }
+
+    toggle.addEventListener("click", () => {
+        body.classList.toggle("light");
+
+        if (body.classList.contains("light")) {
+            localStorage.setItem("theme", "light");
+            toggle.textContent = "☀️";
+        } else {
+            localStorage.setItem("theme", "dark");
+            toggle.textContent = "🌙";
+        }
+    });
+</script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+</script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        // Toggle display between 'flex' and 'none'
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+
+    // Close the menu if the user clicks anywhere outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("sideMenu");
+            if (menu && menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

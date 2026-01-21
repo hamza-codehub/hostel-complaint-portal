@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="top-nav">
+    <div class="nav-title">Hostel Portal</div>
+    <div class="menu-btn" onclick="toggleMenu()">&#8942;</div>
+</nav>
+
+<div id="sideMenu" class="side-menu">
+    <a href="/admin">📊 Dashboard</a>
+    <a href="/admin/users">👥 Registered Users</a>
+    <a href="/admin/logs">📜 Login Logs</a>
+    <a href="/admin/reports">📈 Reports</a>
+    <a href="/logout" class="logout">🚪 Logout</a>
+</div>
+
+<div id="sideMenu" class="side-menu">
+    <a href="/admin">Dashboard</a>
+    <a href="/admin/reports">Reports</a>
+    <a href="/admin/logs">Login Logs</a>
+    <a href="/logout" class="logout">Logout</a>
+    <a href="/admin/users">Registered Users</a>
+
+</div>
+
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="login-container" style="width:700px;">
+
+    <h2>All Complaints</h2>
+
+    {% if complaints %}
+        {% for c in complaints %}
+        
+            <div class="card">
+
+                <p><strong>Name:</strong> {{ c.name }}</p>
+<p><strong>Email:</strong> {{ c.email }}</p>
+<p><strong>Room:</strong> {{ c.room }}</p>
+<p><strong>Category:</strong> {{ c.category }}</p>
+<p><strong>Description:</strong> {{ c.description }}</p>
+<p><strong>Status:</strong> {{ c.status }}</p>
+
+
+                <p>
+                    <strong>Status:</strong>
+                    <span class="status {{ c.status|lower }}">{{ c.status }}</span>
+                </p>
+
+                <!-- UPDATE STATUS -->
+                <form action="/admin/update_status/{{ c.id }}" method="post">
+    <select name="status" required>
+        <option value="Pending" {% if c.status == "Pending" %}selected{% endif %}>Pending</option>
+        <option value="Received" {% if c.status == "Received" %}selected{% endif %}>Received</option>
+        <option value="Verified" {% if c.status == "Verified" %}selected{% endif %}>Verified</option>
+        <option value="Resolved" {% if c.status == "Resolved" %}selected{% endif %}>Resolved</option>
+    </select>
+
+    <button type="submit">Update</button>
+</form>
+
+
+                
+
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No complaints found.</p>
+    {% endif %}
+
+</div>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+</script>
+<script>
+    function toggleMenu() {
+        const menu = document.getElementById("sideMenu");
+        // Toggle display between 'flex' and 'none'
+        if (menu.style.display === "flex") {
+            menu.style.display = "none";
+        } else {
+            menu.style.display = "flex";
+        }
+    }
+
+    // Close the menu if the user clicks anywhere outside of it
+    window.onclick = function(event) {
+        if (!event.target.matches('.menu-btn')) {
+            const menu = document.getElementById("sideMenu");
+            if (menu && menu.style.display === "flex") {
+                menu.style.display = "none";
+            }
+        }
+    }
+</script>
+</body>
+</html>
